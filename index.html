@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="static/img/logo-fav.png">
+    <title>Beagle</title>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="static/lib/material-design-icons/css/material-design-iconic-font.min.css"/>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css"/>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.css"
+          type="text/css"/>
+    <link rel="stylesheet" href="static/lib/bootstrap-slider/css/bootstrap-slider.min.css"/>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="static/css/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="static/css/beagle.css" type="text/css"/>
+    <link rel="stylesheet" href="static/css/style.css" type="text/css"/>
+</head>
+<body>
+<div class="be-wrapper" style="width:100%; height: 100%;">
+    <!--<nav class="navbar navbar-expand fixed-top be-top-header">
+        <div class="container-fluid">
+            <div class="page-title">Traffic Visual Analytics</div>
+        </div>
+    </nav>-->
+
+    <nav class="sb-topnav sb-navbar sb-navbar-expand sb-navbar-dark fixed-top bg-dark" style="height: 5%;">
+        <a class="sb-navbar-brand ps-3" href="#" style="font-size: 1rem; padding-bottom: 0.5rem; font-family: system-ui;">FUSION PLATFORM</a>
+
+        <ul class="sb-navbar-nav ms-auto ms-md-0 me-3 me-lg-4" style="padding-left: 2rem;">
+            <li class="sb-nav-item">
+                <a class="sb-nav-link" href="#!" >WORKSPACE</a>
+            </li>
+            <li class="sb-nav-item">
+                <a class="sb-nav-link" href="#!">COOPERATION LIST</a>
+            </li>
+        </ul>
+
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+            </div>
+        </form>
+        <head>
+            <ul class="sb-navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="sb-nav-item dropdown">
+                    <a class="sb-nav-link sb-dropdown-toggle" id="navbarDropdown" href="#" role="button" style="font-size: 1rem; padding-bottom: 0.5rem; font-family: system-ui;"
+                       data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i>세종대학교</a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </head>
+    </nav>
+
+    <div class="be-content-expand" style="width:100%; margin: 0; height: 91%;">
+        <div class="main-content container-fluid" style="width:100%; height: 100%;">
+            <!-- CCTV info -->
+            <div class="row" style="width:100%; height: 60%;">
+                <div class="col-lg-6" style="height: 100%;">
+                    <div class="row" style="height: 60%;">
+                        <div class="col-lg-6" style="height: 100%;">
+                            <div class="card" style="height: 100%;">
+                                <div class="card-body" style="height: 100%;">
+                                    <div id="map" style="height: 100%;"></div>
+                                    <!--
+                                    <div class="timeslider-wrapper" style="height: 20%;">
+                                        <input id="timeslider" type="text" value="" class="bslider form-control"/>
+                                    </div>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" style="height: 100%;">
+                            <div class="card" style="height: 100%;">
+                                <div class="card-body" style="height: 100%;">
+                                    <div class="header" style="font-size: 16px;">도로 현황: <span id="trafficConditionText"></span></div>
+                                    <div id="cctv-video" class="cctv-video data-section empty"
+                                         style="height: 85%;"></div>
+                                    <div id="trafficConditionText2" class="header" style="font-size: 16px;">평소에 비해 <span id="trafficConditionPerText"></span>% 혼잡함</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="height: 39%; margin-top: 1%;">
+                        <div class="card" style="height: 100%;">
+                            <div class="card-body" style="height: 100%;">
+                                <div class="col-lg-12" id="temporalAnomalyAnalysisView"
+                                     style="height: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" style="width:100%; height: 100%;">
+                    <div class="card" style="width:100%; height: 100%;">
+                        <div class="card-body" style="width:100%; height: 100%;">
+                            <div class="header" style="width:100%; height: 10%; font-size: 16px;">혼잡 원인 추정
+                                <hr>
+                            </div>
+                            <div class="row" id="eventArea" style="width:100%; height: 90%;">
+                                <div id="PieArea" class="col-lg-3" style="height: 100%; width: 100%;">
+                                    <div id="eventPie" style="height: 30%;" onclick="pieClick1()">
+                                        <div id="eventPie1" style="height: 100%;"></div>
+                                    </div>
+                                    <div id="accidentPie" style="height: 30%;" onclick="pieClick2()">
+                                        <div id="eventPie2" style="height: 100%;"></div>
+                                    </div>
+                                    <div id="constructionPie" style="height: 30%;" onclick="pieClick3()">
+                                        <div id="eventPie3" style="height: 100%;"></div>
+                                    </div>
+                                </div>
+                                <div class="vertical-line"
+                                     style="border-left: 1px solid rgba(0, 0, 0, 0.3); height: 95%; margin-top:2%; margin-left: 12px;"></div>
+                                <div class="col-lg-8" style="width:100%; height: 100%;">
+                                    <div id="eventDescription" class="card-body" style="width: 110%; height: 100%; text-align: center; align-items: center; justify-content: center; overflow: auto;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="width:100%; height: 39%; margin-top: 1%;">
+                <div class="col-lg-3" style="height: 100%;">
+                    <div class="card" style="height: 100%;">
+                        <div class="card-body" style="height: 100%;">
+                            <div id="replaceRank" style="height: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" style="height: 100%;">
+                    <div class="card" style="height: 100%;">
+                        <div class="card-body" style="height: 100%;">
+                            <div class="header" style="height: 10%; font-size: 16px;">대체 경로에 의한 교통량 분산</div>
+                            <div id="sankeyDiagram" style="height: 90%; width: 100%; "></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3" style="height: 100%;">
+                    <div class="card" style="height: 100%;">
+                        <div class="card-body" style="height: 100%; text-align: right;">
+                            <div id="map2" style="height: 95%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; PCN & WISEITECH & Sejong University 2023</div>
+                <!-- <div>
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
+                </div> -->
+            </div>
+        </div>
+    </footer>
+</div>
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.0.9/mapbox-gl-draw.js"></script>
+<script src="static/lib/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="static/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+<script src="static/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="static/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="static/lib/select2/js/select2.min.js" type="text/javascript"></script>
+<script src="static/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/heatmap.js"></script>
+<script src="http://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/d3-selection-multi.v1.js"></script>
+<script src='https://cdn.plot.ly/plotly-2.27.0.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'>
+<script src="static/js/app.js" type="text/javascript"></script>
+<script src="static/js/app-form-elements.js" type="text/javascript"></script>
+<script src="static/js/va-app.js" type="text/javascript"></script>
+<script src="static/js/va-cctv-info.js" type="text/javascript"></script>
+<script src="static/js/va-eventPie.js" type="text/javascript"></script>
+<script src="static/js/va-map.js" type="text/javascript"></script>
+<script src="static/js/va-underMap.js" type="text/javascript"></script>
+<script src="static/js/va-training-graph.js" type="text/javascript"></script>
+<script src="static/js/anomalyVis.js" type="text/javascript"></script>
+<script src="static/js/sankey.js" type="text/javascript"></script>
+<script src="static/js/rank.js" type="text/javascript"></script>
+<script src="static/js/eventInfo.js" type="text/javascript"></script>
+</body>
+</html>
