@@ -21,7 +21,7 @@ function drawAnomalyVis(node) {
 
 function readRawData(node) {
     $.ajax({
-        url: '../static/data/date/' + node + '.csv',
+        url: 'static/data/date/' + node + '.csv',
         dataType: 'text',
     }).done(function (data) {
         var rawAxis = [];
@@ -51,7 +51,7 @@ function readRawData(node) {
 
 function readAnomalyData(rawAxis, rawData, node) {
     $.ajax({
-        url: '../static/data/anomaly/col_' + node + '.csv',
+        url: 'static/data/anomaly/col_' + node + '.csv',
         dataType: 'text',
     }).done(function (data) {
         var anomalyData = [];
