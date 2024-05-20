@@ -55,3 +55,13 @@ function runCCTVVideo(channel) {
     $('input[name=cctv_direction][value=ne]').prop('checked', true);
   });
 }
+
+function runCCTVVideo2(name) {
+    $('#cctv-video').removeClass('empty');
+    var video1 = document.createElement('video');
+    video1.src = "static/data/video/"+name+".mp4";
+    video1.controls = true;
+    video1.style.width = '100%';
+    video1.style.height = '100%';
+    document.getElementById('cctv-video').appendChild(video1);
+}

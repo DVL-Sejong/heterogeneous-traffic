@@ -91,7 +91,8 @@ function drawMap() {
         $('#replaceRank').empty();
         $('#sankeyDiagram').empty();
         getTrafficConditionText(channelConditionData);
-        runCCTVVideo(channel);
+        //runCCTVVideo(channel);
+        runCCTVVideo2(e.features[0].properties.name);
         drawAnomalyVis(channel);
         drawRank(channel);
         drawPie(channel);
